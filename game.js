@@ -40,17 +40,28 @@ function handleClick() {
 
   playSound(userChosenColor);
   animatePress(userChosenColor);
-  checkAnswer(userChosenColor);
+  checkAnswer();
 }
 
 //check answer
-function checkAnswer(userChosenColor) {
+function checkAnswer() {
   let counter = 0;
   for (let i = 0; i < userPattern.length; i++) {
     if (userPattern[i] === gamePattern[i]) {
       counter++;
     } else {
-      console.log("game over");
+      let gameover = new Audio("sounds/wrong.mp3");
+      gameover.play();
+
+      $("body").addClass("game-over");
+
+      setTimeout(function () {
+        $("body").removeClass("game-over");
+      }, 200);
+
+      $("h1").html("Game over <br> Press any key to restart");
+
+      startOver();
     }
   }
   if (counter === gamePattern.length) {
@@ -59,6 +70,14 @@ function checkAnswer(userChosenColor) {
     }, 1000);
     userPattern = [];
   }
+}
+
+//start game over
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  userPattern = [];
+  started = false;
 }
 
 //play sound
