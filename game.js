@@ -21,25 +21,44 @@ function nextSequence() {
   let randomNum = Math.floor(Math.random() * 4);
   let randomColor = buttonColors[randomNum];
   gamePattern.push(randomColor);
+  console.log(`gamePattern: ${gamePattern}`);
 
   $(`#${randomColor}`).fadeOut(100).fadeIn(100);
 
   playSound(randomColor);
 
-  level += 1;
+  level++;
   $("h1").text(`Level ${level}`);
 }
 
-//click event
+//user clicks button
 $(".btn").click(handleClick);
 
 function handleClick() {
   let userChosenColor = $(this).attr("id");
   userPattern.push(userChosenColor);
-  console.log(userPattern);
 
   playSound(userChosenColor);
   animatePress(userChosenColor);
+  checkAnswer(userChosenColor);
+}
+
+//check answer
+function checkAnswer(userChosenColor) {
+  let counter = 0;
+  for (let i = 0; i < userPattern.length; i++) {
+    if (userPattern[i] === gamePattern[i]) {
+      counter++;
+    } else {
+      console.log("game over");
+    }
+  }
+  if (counter === gamePattern.length) {
+    setTimeout(function () {
+      nextSequence();
+    }, 1000);
+    userPattern = [];
+  }
 }
 
 //play sound
