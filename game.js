@@ -11,7 +11,6 @@ $(document).keydown(startGame);
 function startGame() {
   if (!started) {
     nextSequence();
-    // $("h1").text(`Level ${level}`);
     started = true;
   }
 }
